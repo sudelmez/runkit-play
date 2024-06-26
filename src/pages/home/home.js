@@ -12,18 +12,19 @@ function HomePage() {
                 method: 'GET',
                 headers: { "content-type": "application/json" }
             });
-            const json = await res.json();
-            const locs = json.iss_position;
-            console.log(locs);
-            setLoc(locs);
-            setEntity(
-                <Entity
-                    name="tokyo"
-                    // position={Cartesian3.fromDegrees(139.767052, 35.681167, 100)}
-                    position={Cartesian3.fromDegrees(parseInt(loc.longitude), parseInt(loc.latitude), 100)}
-                    point={{ pixelSize: 10 }}>
-                </Entity>
-            )
+            const json = await res.json().then(() => {
+                const locs = json.iss_position;
+                console.log(locs);
+                setLoc(locs);
+                setEntity(
+                    <Entity
+                        name="tokyo"
+                        // position={Cartesian3.fromDegrees(139.767052, 35.681167, 100)}
+                        position={Cartesian3.fromDegrees(parseInt(loc.longitude), parseInt(loc.latitude), 100)}
+                        point={{ pixelSize: 10 }}>
+                    </Entity>
+                )
+            });
             console.log("response:");
             console.log(json);
         } catch (error) {
